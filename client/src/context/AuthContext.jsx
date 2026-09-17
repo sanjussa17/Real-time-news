@@ -1,13 +1,15 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
 
+const API_BASE = import.meta.env.VITE_API_URL || '';
+axios.defaults.baseURL = API_BASE;
+
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
 
-    // Auto-login guest or stored user on mount
     useEffect(() => {
         const initAuth = async () => {
             const storedToken = localStorage.getItem('pulsenews_token');
@@ -16,7 +18,6 @@ export const AuthProvider = ({ children }) => {
             }
 
             try {
-                // Log in as Guest by default if no stored session exists
                 const { data } = await axios.post('/api/auth/guest');
                 setUser(data);
                 localStorage.setItem('pulsenews_token', data.token);

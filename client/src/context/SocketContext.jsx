@@ -11,8 +11,9 @@ export const SocketProvider = ({ children }) => {
     const [audioEnabled, setAudioEnabled] = useState(true);
 
     useEffect(() => {
-        // Connect to Express Socket.io backend
-        const socketInstance = io(window.location.origin, {
+        const targetUrl = import.meta.env.VITE_API_URL || window.location.origin;
+
+        const socketInstance = io(targetUrl, {
             transports: ['websocket', 'polling'],
             reconnectionAttempts: 5,
         });
@@ -27,7 +28,6 @@ export const SocketProvider = ({ children }) => {
             setIsConnected(false);
         });
 
-        // Listen for global breaking news broadcasts
         socketInstance.on('breaking_news', (article) => {
             console.log('[Socket.io Client] Received Breaking News Alert:', article);
             setActiveAlert(article);
@@ -39,14 +39,14 @@ export const SocketProvider = ({ children }) => {
                     const osc = audioCtx.createOscillator();
                     const gain = audioCtx.createGain();
                     osc.type = 'sine';
-                    osc.frequency.setValueAtTime(880, audioCtx.currentTime); // A5 note
+                    osc.frequency.setValueAtTime(880, audioCtx.currentTime);
                     gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
                     osc.connect(gain);
                     gain.connect(audioCtx.destination);
                     osc.start();
                     osc.stop(audioCtx.currentTime + 0.3);
                 } catch (e) {
-                    // Audio context interaction fallback
+                    // Audio context fallback
                 }
             }
         });
