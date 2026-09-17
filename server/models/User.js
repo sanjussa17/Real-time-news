@@ -7,7 +7,7 @@ const userSchema = new mongoose.Schema(
             type: String,
             required: true,
             trim: true,
-            default: 'News Subscriber',
+            default: 'Reader',
         },
         email: {
             type: String,

@@ -7,10 +7,17 @@ export const ThemeProvider = ({ children }) => {
 
     useEffect(() => {
         localStorage.setItem('pulsenews_theme', theme);
+        const root = document.documentElement;
         if (theme === 'dark') {
-            document.documentElement.classList.add('dark');
+            root.classList.add('dark');
+            root.classList.remove('light');
+            document.body.style.backgroundColor = '#020617';
+            document.body.style.color = '#f8fafc';
         } else {
-            document.documentElement.classList.remove('dark');
+            root.classList.add('light');
+            root.classList.remove('dark');
+            document.body.style.backgroundColor = '#f8fafc';
+            document.body.style.color = '#0f172a';
         }
     }, [theme]);
 

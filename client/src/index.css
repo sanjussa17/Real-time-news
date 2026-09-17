@@ -25,6 +25,59 @@
     }
 }
 
+/* Light Theme Overrides */
+html.light .glass-panel {
+    background: rgba(255, 255, 255, 0.9);
+    border-color: rgba(226, 232, 240, 0.9);
+    color: #0f172a;
+}
+
+html.light .glass-card {
+    background: rgba(248, 250, 252, 0.9);
+    border-color: rgba(203, 213, 225, 0.8);
+    color: #0f172a;
+}
+
+html.light .glass-card-hover:hover {
+    background: #ffffff;
+    border-color: rgba(244, 63, 94, 0.5);
+    box-shadow: 0 10px 30px -10px rgba(244, 63, 94, 0.2);
+}
+
+html.light header {
+    background: rgba(255, 255, 255, 0.9);
+    border-color: rgba(226, 232, 240, 0.9);
+}
+
+html.light text-white,
+html.light .text-white {
+    color: #0f172a !important;
+}
+
+html.light .text-slate-100 {
+    color: #1e293b !important;
+}
+
+html.light .text-slate-300 {
+    color: #334155 !important;
+}
+
+html.light .text-slate-400 {
+    color: #475569 !important;
+}
+
+html.light .bg-slate-950 {
+    background-color: #f8fafc !important;
+}
+
+html.light .bg-slate-900 {
+    background-color: #f1f5f9 !important;
+}
+
+html.light .border-slate-800 {
+    border-color: #e2e8f0 !important;
+}
+
 @keyframes pulseGlow {
 
     0%,

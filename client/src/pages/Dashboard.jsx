@@ -39,7 +39,7 @@ export default function Dashboard({ setActiveTab, onOpenTestEmail }) {
                     </div>
 
                     <h1 className="text-3xl md:text-4xl font-extrabold text-white tracking-tight leading-tight">
-                        Welcome, <span className="bg-gradient-to-r from-rose-400 via-amber-300 to-rose-400 bg-clip-text text-transparent">{user?.name || 'News Subscriber'}</span>
+                        Welcome, <span className="bg-gradient-to-r from-rose-400 via-amber-300 to-rose-400 bg-clip-text text-transparent">{user?.name || 'Reader'}</span>
                     </h1>
 
                     <p className="text-sm md:text-base text-slate-300 leading-relaxed">

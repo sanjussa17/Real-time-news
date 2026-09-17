@@ -20,7 +20,7 @@ router.post('/register', async (req, res) => {
         }
 
         const user = await User.create({
-            name: name || 'News Subscriber',
+            name: name || 'Reader',
             email,
             password,
         });
@@ -71,11 +71,14 @@ router.post('/guest', async (req, res) => {
         let guestUser = await User.findOne({ email: 'demo@pulsenews.live' });
         if (!guestUser) {
             guestUser = await User.create({
-                name: 'Demo Subscriber',
+                name: 'Reader',
                 email: 'demo@pulsenews.live',
                 password: 'demopassword123',
                 isGuest: true,
             });
+        } else if (guestUser.name !== 'Reader') {
+            guestUser.name = 'Reader';
+            await guestUser.save();
         }
 
         res.json({
@@ -93,7 +96,6 @@ router.post('/guest', async (req, res) => {
     }
 });
 
-// Auth middleware for protected routes
 export const protect = async (req, res, next) => {
     let token;
     if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
@@ -107,7 +109,6 @@ export const protect = async (req, res, next) => {
         }
     }
 
-    // Fallback: load demo user if no token sent for simple assessment previewing
     req.user = await User.findOne({ email: 'demo@pulsenews.live' }) || await User.findOne();
     if (req.user) return next();
 
