@@ -11,25 +11,33 @@ export const SocketProvider = ({ children }) => {
     const [audioEnabled, setAudioEnabled] = useState(true);
 
     useEffect(() => {
-        const targetUrl = import.meta.env.VITE_API_URL || window.location.origin;
+        // Connect directly to backend port 5000 in dev or VITE_API_URL in production
+        const targetUrl = import.meta.env.VITE_API_URL || (window.location.hostname === 'localhost' ? 'http://localhost:5000' : window.location.origin);
 
         const socketInstance = io(targetUrl, {
-            transports: ['websocket', 'polling'],
-            reconnectionAttempts: 5,
+            transports: ['polling', 'websocket'],
+            reconnectionAttempts: 10,
+            reconnectionDelay: 2000,
+            autoConnect: true,
         });
 
         socketInstance.on('connect', () => {
-            console.log('[Socket.io Client] Connected to real-time news server');
+            console.log('[Socket.io Client] Real-time news server connected');
             setIsConnected(true);
         });
 
         socketInstance.on('disconnect', () => {
-            console.log('[Socket.io Client] Disconnected from server');
+            console.log('[Socket.io Client] Disconnected from real-time news server');
+            setIsConnected(false);
+        });
+
+        socketInstance.on('connect_error', (err) => {
+            // Silently handle retry
             setIsConnected(false);
         });
 
         socketInstance.on('breaking_news', (article) => {
-            console.log('[Socket.io Client] Received Breaking News Alert:', article);
+            console.log('[Socket.io Client] Received Breaking Alert:', article);
             setActiveAlert(article);
             setAlertHistory((prev) => [article, ...prev]);
 
@@ -46,7 +54,7 @@ export const SocketProvider = ({ children }) => {
                     osc.start();
                     osc.stop(audioCtx.currentTime + 0.3);
                 } catch (e) {
-                    // Audio context fallback
+                    // Audio fallback
                 }
             }
         });

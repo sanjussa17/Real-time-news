@@ -1,28 +1,26 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { toggleThemeMode } from '../redux/slices/themeSlice';
 
 const ThemeContext = createContext();
 
 export const ThemeProvider = ({ children }) => {
-    const [theme, setTheme] = useState(() => localStorage.getItem('pulsenews_theme') || 'dark');
+    const theme = useSelector((state) => state.theme.mode);
+    const dispatch = useDispatch();
 
     useEffect(() => {
-        localStorage.setItem('pulsenews_theme', theme);
         const root = document.documentElement;
         if (theme === 'dark') {
             root.classList.add('dark');
             root.classList.remove('light');
-            document.body.style.backgroundColor = '#020617';
-            document.body.style.color = '#f8fafc';
         } else {
             root.classList.add('light');
             root.classList.remove('dark');
-            document.body.style.backgroundColor = '#f8fafc';
-            document.body.style.color = '#0f172a';
         }
     }, [theme]);
 
     const toggleTheme = () => {
-        setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'));
+        dispatch(toggleThemeMode());
     };
 
     return (

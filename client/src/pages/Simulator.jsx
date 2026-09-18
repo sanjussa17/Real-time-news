@@ -38,26 +38,26 @@ export default function Simulator({ onAlertDispatched }) {
     return (
         <div className="max-w-3xl mx-auto space-y-6 animate-fade-in">
             <div className="text-center space-y-2">
-                <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-rose-500/10 border border-rose-500/20 text-rose-400 text-xs font-bold uppercase tracking-wider">
-                    <Radio className="w-3.5 h-3.5 animate-pulse" />
+                <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-rose-500/10 border border-rose-500/20 text-rose-500 text-xs font-bold uppercase tracking-wider">
+                    <Radio className="w-3.5 h-3.5 animate-pulse text-rose-500" />
                     <span>Real-Time Event Simulator</span>
                 </div>
-                <h1 className="text-3xl font-extrabold text-white">Broadcast Breaking News Alert</h1>
-                <p className="text-xs text-slate-400 max-w-xl mx-auto">
+                <h1 className="text-3xl font-extrabold theme-text-primary">Broadcast Breaking News Alert</h1>
+                <p className="text-xs theme-text-secondary max-w-xl mx-auto">
                     Simulate a real-time breaking news event. This will emit a Socket.io WebSocket event to active clients and dispatch Nodemailer email notifications to subscribed users!
                 </p>
             </div>
 
-            <form onSubmit={handleTrigger} className="glass-panel p-6 md:p-8 rounded-3xl border border-slate-800 space-y-5 shadow-2xl">
+            <form onSubmit={handleTrigger} className="glass-panel theme-card-bg p-6 md:p-8 rounded-3xl border border-slate-300 dark:border-slate-800 space-y-5 shadow-2xl">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                        <label className="block text-xs font-semibold text-slate-300 mb-1.5">
+                        <label className="block text-xs font-semibold theme-text-secondary mb-1.5">
                             News Category
                         </label>
                         <select
                             value={category}
                             onChange={(e) => setCategory(e.target.value)}
-                            className="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs text-slate-100 font-semibold focus:outline-none focus:border-rose-500 transition"
+                            className="w-full px-4 py-2.5 rounded-xl theme-input-bg border border-slate-300 dark:border-slate-800 text-xs theme-text-primary font-semibold focus:outline-none focus:border-rose-500 transition"
                         >
                             {CATEGORIES.map((cat) => (
                                 <option key={cat} value={cat}>{cat}</option>
@@ -66,13 +66,13 @@ export default function Simulator({ onAlertDispatched }) {
                     </div>
 
                     <div>
-                        <label className="block text-xs font-semibold text-slate-300 mb-1.5">
+                        <label className="block text-xs font-semibold theme-text-secondary mb-1.5">
                             News Wire Source
                         </label>
                         <select
                             value={source}
                             onChange={(e) => setSource(e.target.value)}
-                            className="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs text-slate-100 font-semibold focus:outline-none focus:border-rose-500 transition"
+                            className="w-full px-4 py-2.5 rounded-xl theme-input-bg border border-slate-300 dark:border-slate-800 text-xs theme-text-primary font-semibold focus:outline-none focus:border-rose-500 transition"
                         >
                             {SOURCES.map((src) => (
                                 <option key={src} value={src}>{src}</option>
@@ -82,7 +82,7 @@ export default function Simulator({ onAlertDispatched }) {
                 </div>
 
                 <div>
-                    <label className="block text-xs font-semibold text-slate-300 mb-1.5">
+                    <label className="block text-xs font-semibold theme-text-secondary mb-1.5">
                         Breaking Headline Title (Optional - auto-generated if blank)
                     </label>
                     <input
@@ -90,12 +90,12 @@ export default function Simulator({ onAlertDispatched }) {
                         value={headline}
                         onChange={(e) => setHeadline(e.target.value)}
                         placeholder="e.g. Breakthrough Quantum Computing Microprocessor Unveiled"
-                        className="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs text-slate-100 focus:outline-none focus:border-rose-500 transition"
+                        className="w-full px-4 py-2.5 rounded-xl theme-input-bg border border-slate-300 dark:border-slate-800 text-xs theme-text-primary placeholder-slate-400 focus:outline-none focus:border-rose-500 transition"
                     />
                 </div>
 
                 <div>
-                    <label className="block text-xs font-semibold text-slate-300 mb-1.5">
+                    <label className="block text-xs font-semibold theme-text-secondary mb-1.5">
                         Alert Details & Description (Optional)
                     </label>
                     <textarea
@@ -103,7 +103,7 @@ export default function Simulator({ onAlertDispatched }) {
                         onChange={(e) => setDescription(e.target.value)}
                         rows={3}
                         placeholder="Provide breaking story context or details..."
-                        className="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs text-slate-100 focus:outline-none focus:border-rose-500 transition"
+                        className="w-full px-4 py-2.5 rounded-xl theme-input-bg border border-slate-300 dark:border-slate-800 text-xs theme-text-primary placeholder-slate-400 focus:outline-none focus:border-rose-500 transition"
                     />
                 </div>
 
@@ -128,33 +128,33 @@ export default function Simulator({ onAlertDispatched }) {
 
             {/* Broadcast Result Details */}
             {result && (
-                <div className="glass-panel p-6 rounded-3xl border border-emerald-500/40 bg-emerald-950/20 text-xs space-y-3 animate-fade-in shadow-2xl">
-                    <div className="flex items-center space-x-2 text-emerald-400 font-extrabold text-sm">
+                <div className="glass-panel theme-card-bg p-6 rounded-3xl border border-emerald-500/40 text-xs space-y-3 animate-fade-in shadow-2xl">
+                    <div className="flex items-center space-x-2 text-emerald-500 font-extrabold text-sm">
                         <CheckCircle className="w-5 h-5" />
                         <span>Alert Successfully Broadcasted Across All Channels!</span>
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
-                        <div className="p-3 rounded-xl bg-slate-900/80 border border-slate-800 flex items-center space-x-3">
-                            <Wifi className="w-5 h-5 text-cyan-400 shrink-0" />
+                        <div className="p-3 rounded-xl bg-slate-200 dark:bg-slate-900/80 border border-slate-300 dark:border-slate-800 flex items-center space-x-3">
+                            <Wifi className="w-5 h-5 text-cyan-500 shrink-0" />
                             <div>
-                                <div className="font-bold text-slate-200">WebSocket Broadcast</div>
-                                <div className="text-[11px] text-slate-400">Pushed to all active client sockets</div>
+                                <div className="font-bold theme-text-primary">WebSocket Broadcast</div>
+                                <div className="text-[11px] theme-text-secondary">Pushed to all active client sockets</div>
                             </div>
                         </div>
 
-                        <div className="p-3 rounded-xl bg-slate-900/80 border border-slate-800 flex items-center space-x-3">
-                            <Mail className="w-5 h-5 text-rose-400 shrink-0" />
+                        <div className="p-3 rounded-xl bg-slate-200 dark:bg-slate-900/80 border border-slate-300 dark:border-slate-800 flex items-center space-x-3">
+                            <Mail className="w-5 h-5 text-rose-500 shrink-0" />
                             <div>
-                                <div className="font-bold text-slate-200">Nodemailer Dispatch</div>
-                                <div className="text-[11px] text-slate-400">{result.notificationsSent} email notification(s) sent</div>
+                                <div className="font-bold theme-text-primary">Nodemailer Dispatch</div>
+                                <div className="text-[11px] theme-text-secondary">{result.notificationsSent} email notification(s) sent</div>
                             </div>
                         </div>
                     </div>
 
                     <div className="pt-2 border-t border-emerald-500/20">
-                        <span className="text-slate-400 font-medium">Broadcasted Headline:</span>
-                        <p className="font-bold text-white text-sm mt-0.5">{result.article?.title}</p>
+                        <span className="theme-text-secondary font-medium">Broadcasted Headline:</span>
+                        <p className="font-bold theme-text-primary text-sm mt-0.5">{result.article?.title}</p>
                     </div>
                 </div>
             )}

@@ -1,117 +1,89 @@
 @import "tailwindcss";
 
-@layer utilities {
-    .glass-panel {
-        background: rgba(15, 23, 42, 0.75);
-        backdrop-filter: blur(16px);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-    }
+@custom-variant dark (&:where(.dark, .dark *));
 
-    .glass-card {
-        background: rgba(30, 41, 59, 0.6);
-        backdrop-filter: blur(12px);
-        border: 1px solid rgba(255, 255, 255, 0.07);
-    }
-
-    .glass-card-hover {
-        transition: all 0.25s ease-in-out;
-    }
-
-    .glass-card-hover:hover {
-        background: rgba(30, 41, 59, 0.85);
-        border-color: rgba(244, 63, 94, 0.3);
-        transform: translateY(-2px);
-        box-shadow: 0 10px 30px -10px rgba(244, 63, 94, 0.15);
-    }
+:root {
+    --bg-page: #f1f5f9;
+    --bg-header: #ffffff;
+    --bg-card: #ffffff;
+    --bg-input: #ffffff;
+    --text-primary: #0f172a;
+    --text-secondary: #475569;
+    --border-color: #cbd5e1;
 }
 
-/* Light Theme Overrides */
-html.light .glass-panel {
-    background: rgba(255, 255, 255, 0.9);
-    border-color: rgba(226, 232, 240, 0.9);
-    color: #0f172a;
+html.dark {
+    --bg-page: #020617;
+    --bg-header: #090d16;
+    --bg-card: #0f172a;
+    --bg-input: #020617;
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+    --border-color: #1e293b;
 }
 
-html.light .glass-card {
-    background: rgba(248, 250, 252, 0.9);
-    border-color: rgba(203, 213, 225, 0.8);
-    color: #0f172a;
+body {
+    background-color: var(--bg-page) !important;
+    color: var(--text-primary) !important;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-html.light .glass-card-hover:hover {
-    background: #ffffff;
-    border-color: rgba(244, 63, 94, 0.5);
+.theme-page-bg {
+    background-color: var(--bg-page) !important;
+}
+
+.theme-header-bg {
+    background-color: var(--bg-header) !important;
+    border-color: var(--border-color) !important;
+}
+
+.theme-card-bg {
+    background-color: var(--bg-card) !important;
+    color: var(--text-primary) !important;
+    border-color: var(--border-color) !important;
+}
+
+.theme-text-primary {
+    color: var(--text-primary) !important;
+}
+
+.theme-text-secondary {
+    color: var(--text-secondary) !important;
+}
+
+.theme-input-bg {
+    background-color: var(--bg-input) !important;
+    color: var(--text-primary) !important;
+    border-color: var(--border-color) !important;
+}
+
+/* Glass Card & Hover Effects */
+.glass-card {
+    background-color: var(--bg-card) !important;
+    border: 1px solid var(--border-color) !important;
+}
+
+.glass-card-hover:hover {
+    transform: translateY(-2px);
     box-shadow: 0 10px 30px -10px rgba(244, 63, 94, 0.2);
 }
 
-html.light header {
-    background: rgba(255, 255, 255, 0.9);
-    border-color: rgba(226, 232, 240, 0.9);
+/* Ensure solid buttons retain crisp white text */
+.btn-solid-text,
+.bg-rose-600,
+.bg-rose-500,
+.bg-amber-600,
+.bg-emerald-600,
+.bg-blue-600 {
+    color: #ffffff !important;
 }
 
-html.light text-white,
-html.light .text-white {
-    color: #0f172a !important;
+/* Scrollbar utilities */
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
 }
 
-html.light .text-slate-100 {
-    color: #1e293b !important;
-}
-
-html.light .text-slate-300 {
-    color: #334155 !important;
-}
-
-html.light .text-slate-400 {
-    color: #475569 !important;
-}
-
-html.light .bg-slate-950 {
-    background-color: #f8fafc !important;
-}
-
-html.light .bg-slate-900 {
-    background-color: #f1f5f9 !important;
-}
-
-html.light .border-slate-800 {
-    border-color: #e2e8f0 !important;
-}
-
-@keyframes pulseGlow {
-
-    0%,
-    100% {
-        opacity: 0.4;
-        filter: drop-shadow(0 0 8px rgba(244, 63, 94, 0.6));
-    }
-
-    50% {
-        opacity: 1;
-        filter: drop-shadow(0 0 16px rgba(244, 63, 94, 0.9));
-    }
-}
-
-.animate-pulse-glow {
-    animation: pulseGlow 2s infinite ease-in-out;
-}
-
-@keyframes marquee {
-    0% {
-        transform: translateX(0%);
-    }
-
-    100% {
-        transform: translateX(-50%);
-    }
-}
-
-.animate-marquee {
-    display: flex;
-    width: max-content;
-    animation: marquee 35s linear infinite;
-}
-
-.animate-marquee:hover {
-    animation-play-state: paused;
+.no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 }
