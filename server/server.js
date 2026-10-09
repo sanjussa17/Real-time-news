@@ -20,8 +20,13 @@ dotenv.config();
 const app = express();
 const server = http.createServer(app);
 
-// Middleware setup
-app.use(cors());
+// Middleware setup - Robust CORS for Netlify cross-origin requests
+app.use(cors({
+    origin: '*',
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+}));
+
 app.use(express.json());
 
 // Initialize Socket.io
@@ -61,7 +66,7 @@ cron.schedule('0 * * * *', async () => {
 });
 
 cron.schedule('0 9 * * *', async () => {
-    console.log('[CronScheduler] Running daily morning news digest check...');
+    console.log('[CronScheduler] Running daily alert briefing check...');
     try {
         await processDailyDigests();
     } catch (err) {
@@ -72,17 +77,15 @@ cron.schedule('0 9 * * *', async () => {
 const PORT = process.env.PORT || 5000;
 
 const startServer = async () => {
-    try {
-        await connectDB();
-        await seedInitialNews();
-        await initEmailTransporter();
+    await connectDB();
+    await initEmailTransporter();
+    await seedInitialNews();
 
-        server.listen(PORT, () => {
-            console.log(`[PulseNews Backend] Server running on http://localhost:${PORT}`);
-        });
-    } catch (error) {
-        console.error(`[PulseNews Backend] Failed to start server: ${error.message}`);
-    }
+    server.listen(PORT, () => {
+        console.log(`[Server] PulseNews server running on port ${PORT}`);
+    });
 };
 
-startServer();
+startServer().catch((err) => {
+    console.error('[Server] Failed to start server:', err.message);
+});

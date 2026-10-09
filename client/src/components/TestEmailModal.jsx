@@ -38,12 +38,19 @@ export default function TestEmailModal({ isOpen, onClose, defaultArticle }) {
                     targetEmail: email,
                     category,
                 },
-                { headers }
+                {
+                    headers,
+                    timeout: 60000, // 60s timeout to allow Render free tier cold start
+                }
             );
 
             setResult(data);
         } catch (err) {
-            setError(err.response?.data?.message || 'Failed to send test email');
+            if (err.code === 'ECONNABORTED' || err.message?.includes('timeout')) {
+                setError('Backend server request timed out. If your backend is hosted on Render free tier, it may be waking up from sleep. Please try again in 30 seconds.');
+            } else {
+                setError(err.response?.data?.message || err.message || 'Failed to send test email. Please check backend CORS and API URL.');
+            }
         } finally {
             setSending(false);
         }
@@ -89,7 +96,7 @@ export default function TestEmailModal({ isOpen, onClose, defaultArticle }) {
                         <div className="mt-1.5 flex items-start space-x-1.5 text-[11px] text-emerald-400/90 leading-tight">
                             <Info className="w-3.5 h-3.5 shrink-0 mt-0.5" />
                             <span>
-                                <strong>Live Gmail SMTP Active:</strong> Automatically filled with your logged-in email (<code>{email}</code>).
+                                <strong>Live Gmail SMTP Active:</strong> Sending to (<code>{email}</code>). Please check your <strong>Inbox</strong> and <strong>Spam/Junk</strong> folder!
                             </span>
                         </div>
                     </div>
